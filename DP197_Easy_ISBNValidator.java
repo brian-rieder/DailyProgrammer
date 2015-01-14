@@ -1,7 +1,5 @@
 //Link to reddit post: http://www.reddit.com/r/dailyprogrammer/comments/2s7ezp/20150112_challenge_197_easy_isbn_validator/
 
-package com.example.FirstJavaProject;
-
 /**
  * Given the following constraints of the ISBN number, you should write a function that can return True if a number is
  * a valid ISBN and False otherwise.
