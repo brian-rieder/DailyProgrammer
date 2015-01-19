@@ -133,9 +133,79 @@ char * encodeMessage(int num_lines, char * text_input)
 	return ret_str;
 }
 
+char * * genZigZag(int num_lines, char * text_input)
+{
+	int i, read_index;
+	int upflag = 1;
+	int letter_index = 0;
+	int string_index = 0;
+	char * * strArr = malloc(sizeof(char *) * num_lines);
+	for(i = 0; i < num_lines; ++i) 
+		strArr[i] = calloc(strlen(text_input), sizeof(char));
+	for(read_index = 0; read_index < strlen(text_input); ++read_index) {
+		strArr[string_index][letter_index] = '~';
+		if(upflag) {
+			if(string_index + 1 == num_lines) {
+				upflag = 0;
+				++letter_index;
+				strArr[string_index][letter_index] = ' ';
+				--string_index;
+			}
+			else
+				++string_index;
+		}
+		else if(!upflag) {
+			if(string_index == 0) {
+				upflag = 1;
+				++letter_index;
+				strArr[string_index][letter_index] = ' ';
+				++string_index;
+			}
+			else
+				--string_index;
+		}
+	}
+	return strArr;
+}
+
 char * decodeMessage(int num_lines, char * text_input)
 {
-	return NULL;
+	char * * strArr = genZigZag(num_lines, text_input);
+	int i, j;
+	int input_index = 0;
+	for(i = 0; i < num_lines; ++i)
+		for(j = 0; j < strlen(strArr[i]); ++j)
+			if(strArr[i][j] == '~') {
+				strArr[i][j] = text_input[input_index];
+				++input_index;
+			}
+	int upflag = 1;
+	int letter_index = 0;
+	int string_index = 0;
+	input_index = 0;
+	char * ret_str = calloc(strlen(text_input), sizeof(char));
+	for(input_index = 0; input_index < strlen(text_input); ++input_index) {
+		ret_str[input_index] = strArr[string_index][letter_index];
+		if(upflag) {
+			if(string_index + 1 == num_lines) {
+				upflag = 0;
+				++letter_index;
+				--string_index;
+			}
+			else
+				++string_index;
+		}
+		else if(!upflag) {
+			if(string_index == 0) {
+				upflag = 1;
+				++letter_index;
+				++string_index;
+			}
+			else
+				--string_index;
+		}
+	}
+	return ret_str;
 }
 
 int main(int argc, char * * argv) 
