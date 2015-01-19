@@ -14,6 +14,8 @@ __author__ = 'Brian Rieder'
 # The Problem:
 # What is the 1000000th number that is not divisible by any prime greater than 20?
 
+# @TODO: http://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n/2068548#2068548
+
 import time
 import itertools
 
