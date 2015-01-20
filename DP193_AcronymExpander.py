@@ -1,6 +1,6 @@
 __author__ = 'Brian Rieder'
 
-# Link to post: http://www.reddit.com/r/dailyprogrammer/comments/2snhei/20150116_challenge_197_hard_crazy_professor/
+# Link to post: http://www.reddit.com/r/dailyprogrammer/comments/2ptrmp/20141219_challenge_193_easy_acronym_expander/
 
 # Difficulty: Easy
 
