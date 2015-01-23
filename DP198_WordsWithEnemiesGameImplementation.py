@@ -72,29 +72,47 @@ def word_is_valid(available_letters, word_to_check):
             return False
     return True
 
+
+def human_choose_word(human_player):
+    print("Your Letters: " + str(human_player.available_letters))
+    while True:
+        entered_word = input("Your word: ")
+        if word_is_valid(human_player.available_letters, entered_word):
+            break
+        print("You can't spell " + entered_word + " with your letters.")
+    human_player.shoot_word(entered_word)
+
+
+def ai_choose_word(ai_player):
+    print("AI Letters: " + str(ai_player.available_letters))
+    while True:
+        enter = input("AI word: ")
+        if word_is_valid(ai_player.available_letters, enter):
+            break
+        print("You can't spell " + enter + " with your letters.")
+    ai_player.shoot_word(enter)
+
+
 if __name__ == "__main__":
     print("Welcome to Words with Enemies!")
     desired_turns = int(input("Enter the number of turns you want to play: "))
     print("")
-    human_player = Player()
-    ai_player = Player()
-    game = Game(human_player, ai_player)
+    human = Player()
+    ai = Player()
+    game = Game(human, ai)
     while game.turn_number <= desired_turns:
         print("Words with Enemies -- Turn " + str(game.turn_number))
         print("Points -- You: " + str(game.player1.points_scored) + " Computer: " + str(game.player2.points_scored))
         print("----------------------------")
         game.player1.assign_letters()
-        print("Your Letters: " + str(game.player1.available_letters))
-        valid_word = 0
-        while True:
-            entered_word = input("Your word: ")
-            if word_is_valid(game.player1.available_letters, entered_word):
-                break
-            print("You can't spell " + entered_word + " with your letters.")
-            print(game.player1.available_letters)
+        game.player2.assign_letters()
+        human_choose_word(game.player1)
+        ai_choose_word(game.player2)
+        game.word_fight()
 
         print("")
         game.turn_number += 1
+    # Print final results
 
 
 
@@ -116,25 +134,28 @@ if __name__ == "__main__":
 
 
 
+        # http://stackoverflow.com/questions/8924143/efficient-hunting-for-words-in-scrambled-letters
+        # Verifying
+        # #!/usr/bin/python
+        #
+        # from itertools import permutations
+        # import enchant
+        # from sys import argv
+        #
+        # def find_longest(origin):
+        # s = enchant.Dict("en_US")
+        # for i in range(len(origin),0,-1):
+        #         print "Checking against words of length %d" % i
+        #         pool = permutations(origin,i)
+        #         for comb in pool:
+        #             word = ''.join(comb)
+        #             if s.check(word):
+        #                 return word
+        #     return ""
+        #
+        # if (__name__)== '__main__':
+        #     result = find_longest(argv[1])
+        #     print result
 
-# http://stackoverflow.com/questions/8924143/efficient-hunting-for-words-in-scrambled-letters
-# #!/usr/bin/python
-#
-# from itertools import permutations
-# import enchant
-# from sys import argv
-#
-# def find_longest(origin):
-#     s = enchant.Dict("en_US")
-#     for i in range(len(origin),0,-1):
-#         print "Checking against words of length %d" % i
-#         pool = permutations(origin,i)
-#         for comb in pool:
-#             word = ''.join(comb)
-#             if s.check(word):
-#                 return word
-#     return ""
-#
-# if (__name__)== '__main__':
-#     result = find_longest(argv[1])
-#     print result
+        # Word List
+        # http://www.joereynoldsaudio.com/wordlist.txt
