@@ -61,6 +61,8 @@ class Game:
             self.player2.points_scored += self.player2.num_contributed - self.player1.num_contributed
         else:
             print("It was a tie!")
+        self.player1.reset_all_but_points()
+        self.player2.reset_all_but_points()
 
 
 def word_is_valid(available_letters, word_to_check):
@@ -77,9 +79,12 @@ def human_choose_word(human_player):
     print("Your Letters: " + str(human_player.available_letters))
     while True:
         entered_word = input("Your word: ")
-        if word_is_valid(human_player.available_letters, entered_word):
+        if word_is_valid(human_player.available_letters, entered_word) and entered_word in word_dict:
             break
-        print("You can't spell " + entered_word + " with your letters.")
+        elif not word_is_valid(human_player.available_letters, entered_word):
+            print("You can't spell " + entered_word + " with your letters.")
+        else:
+            print(entered_word + " is not in the dictionary!")
     human_player.shoot_word(entered_word)
 
 
@@ -87,14 +92,22 @@ def ai_choose_word(ai_player):
     print("AI Letters: " + str(ai_player.available_letters))
     while True:
         enter = input("AI word: ")
-        if word_is_valid(ai_player.available_letters, enter):
+        if word_is_valid(ai_player.available_letters, enter) and enter in word_dict:
             break
-        print("You can't spell " + enter + " with your letters.")
+        elif not word_is_valid(ai_player.available_letters, enter):
+            print("You can't spell " + enter + " with your letters.")
+        else:
+            print(enter + " is not in the dictionary!")
     ai_player.shoot_word(enter)
 
 
 if __name__ == "__main__":
     print("Welcome to Words with Enemies!")
+    with open('DP198_WordsWithEnemiesGameImplementation_dict16.txt') as handle:
+        word_dict = []
+        for line in handle:
+            word_dict.append(line)
+    word_dict = [word.rstrip("\n") for word in word_dict]
     desired_turns = int(input("Enter the number of turns you want to play: "))
     print("")
     human = Player()
@@ -113,8 +126,16 @@ if __name__ == "__main__":
         print("")
         game.turn_number += 1
     # Print final results
-
-
+    print("Final Results:")
+    print("You: " + str(game.player1.points_scored))
+    print("Computer: " + str(game.player2.points_scored))
+    if game.player1.points_scored > game.player2.points_scored:
+        print("\nYou win the game!")
+    elif game.player2.points_scored > game.player1.points_scored:
+        print("\nComputer wins the game!")
+    else:
+        print("\nThe game was a tie!")
+    print("Thanks for playing!")
 
 
 
