@@ -1,5 +1,47 @@
 __author__ = 'Brian Rieder'
 
+# Difficulty: Hard
+
+# Link to reddit: http://www.reddit.com/r/dailyprogrammer/comments/2tfs0b/20150123_challenge_198_hard_words_with_enemies/
+
+# Description:
+# We had an easy challenge for part 1 of this challenge.
+# (http://www.reddit.com/r/dailyprogrammer/comments/2syz7y/20150119_challenge_198_easy_words_with_enemies/[1] )
+# To expand this further we will make a game. For this challenge you will have to create a player vs AI game battling
+# it out with words. Following some basic rules for the games you must design and implement this game.
+# Rules of the Game:
+# 5 Turns
+# Each turn the user and AI are given random letters
+# The user and AI must submit a dictionary checked word derived from these letters
+# The words are compared. Using the easy challenge the winner of the duel is determined by whoever has the most left
+# over letters.
+# 1 point is awarded for each left over letter.
+# At the end of 5 turns who ever gets the most points wins the game.
+# Design:
+# There are many unanswered design issues with this game. I leave it as part of the challenge for you to develop and
+# decide on that design. Please keep this in mind that part of the challenge beyond solving the coding aspect of this
+# challenge is also solving the design issue of this challenge.
+# Some design suggestions to consider:
+# How many random letters do you get each turn? How do you determine it?
+# Do you wipe all letters clean between rounds and regenerate letters or do they carry over turn to turn with a way to
+# generate new letters?
+# Do you re-use letters left over for the next turn or just ignore them?
+# Does the AI searching for a word have a random level of difficulty?
+# AI design:
+# So you are giving your AI a bunch of letters. It has to find a legal word. Using a dictionary of words you can match
+# up letters to form valid words.
+# I really like the idea of a varied AI. You can make 1-3 levels of AI. Ultimately the AI can be coded to always find
+# the biggest word possible. This could be rather difficult for a human to play against. I would suggest developing at
+# least 2 or 3 different levels of AI (you might have to dumb down the AI) so that players can play against an easier
+# AI and later play against the best AI if they want more a challenge.
+# Checking the user input:
+# Users will input a word based on letters given. Your solution must check to make sure the word entered uses only the
+# letters given to the human user but also that it makes a word in the dictionaries (see above)
+# Input:
+# Varied as needed for the game to work
+# Output:
+# Varied as needed for the game to work
+
 import string
 import random
 
@@ -88,7 +130,7 @@ def human_choose_word(human_player):
     human_player.shoot_word(entered_word)
 
 
-def ai_choose_word(ai_player):
+def ai_choose_word_manual(ai_player):
     print("AI Letters: " + str(ai_player.available_letters))
     while True:
         enter = input("AI word: ")
@@ -99,6 +141,15 @@ def ai_choose_word(ai_player):
         else:
             print(enter + " is not in the dictionary!")
     ai_player.shoot_word(enter)
+
+
+def ai_choose_word(ai_player):
+    print("AI Letters: " + str(ai_player.available_letters))
+    for test_word in word_dict:
+        if word_is_valid(ai_player.available_letters, test_word):
+            print("AI player chose " + test_word + "!")
+            ai_player.shoot_word(test_word)
+            break
 
 
 if __name__ == "__main__":
