@@ -5,3 +5,7 @@ A slightly more concise problem description (most times with sample inputs and o
 
 Dailyprogrammer Subreddit Description:
 Dailyprogrammer is about challenging programmers of all skill level with weekly programming challenges. 3 challenges a week are posted at increasing difficulty. Solutions are peer reviewed and redditors can ask for the community for feedback and comments.
+
+**My Proudest Solutions:**
+
+*DP198_WordsWithEnemiesGameImplementation.py:* A full "Words With Enemies" game implementation against an AI. Checks all inputs against a dictionary as well as the assigned set of letters to construct the word from.
