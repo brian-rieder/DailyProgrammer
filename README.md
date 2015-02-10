@@ -8,13 +8,13 @@ Dailyprogrammer is about challenging programmers of all skill level with weekly 
 
 **My Naming Convention:**
 
-DP###X_Title.ext
+*DP###X_Title.ext*
 
-- DP: Stands for Daily Programmer, the name of the subreddit these solutions are written for.
-- ###: The number associated with the problem. These increase in numerical order *each week* instead of with each problem.
-- X: The difficulty associated with the problem. *E* means Easy, *M* means Medium, and *H* means Hard. Additionally, *S* indicates Supplementary, meaning that the file is necessary for the solution to work.
-- Title: The title associated with the problem. This is meant to give a short synopsis of what the assignment does.
-- .ext: The extension for my solution based on the language.
+- *DP:* Stands for Daily Programmer, the name of the subreddit these solutions are written for.
+- *###:* The number associated with the problem. These increase in numerical order *each week* instead of with each problem.
+- *X:* The difficulty associated with the problem. *E* means Easy, *M* means Medium, and *H* means Hard. Additionally, *S* indicates Supplementary, meaning that the file is necessary for the solution to work.
+- *Title:* The title associated with the problem. This is meant to give a short synopsis of what the assignment does.
+- *.ext:* The extension for my solution based on the language.
 
 This naming convention is current as of February 2, 2015 and will be updated if changes occur.
 
