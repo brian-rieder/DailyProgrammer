@@ -12,7 +12,7 @@ Dailyprogrammer is about challenging programmers of all skill level with weekly 
 
 - *DP:* Stands for Daily Programmer, the name of the subreddit these solutions are written for.
 - *###:* The number associated with the problem. These increase in numerical order *each week* instead of with each problem.
-- *X:* The difficulty associated with the problem. *E* means Easy, *M* means Medium, and *H* means Hard. Additionally, *S* indicates Supplementary, meaning that the file is necessary for the solution to work.
+- *X:* The difficulty associated with the problem. *E* means Easy, *M* means Medium, and *H* means Hard. Additionally, *S* indicates Supplementary, meaning that the file is necessary for the solution to work. A *PE* seen here indicates that it is not of rated difficulty, but rather a practical excercise to implement something that's as hard as you make it.
 - *Title:* The title associated with the problem. This is meant to give a short synopsis of what the assignment does.
 - *.ext:* The extension for my solution based on the language.
 
