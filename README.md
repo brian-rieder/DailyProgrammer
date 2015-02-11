@@ -16,7 +16,7 @@ Dailyprogrammer is about challenging programmers of all skill level with weekly 
 - *Title:* The title associated with the problem. This is meant to give a short synopsis of what the assignment does.
 - *.ext:* The extension for my solution based on the language.
 
-This naming convention is current as of February 2, 2015 and will be updated if changes occur.
+This naming convention is current as of February 11, 2015 and will be updated if changes occur.
 
 **My Proudest Solutions:**
 
