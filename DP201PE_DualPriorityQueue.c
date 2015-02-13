@@ -30,6 +30,14 @@ typedef struct dpq_meta_t {
 	DualPriorityQueue* dpq_by_b;
 } DPQMeta;
 
+void DPQPrint(DualPriorityQueue* dpq)
+{
+    if (dpq != NULL) {
+        printf("%s \n", dpq->name);
+        DPQPrint(dpq->next);
+    }
+}
+
 DPQMeta* DPQMetaConstruct() {
 	DPQMeta* ret = malloc(sizeof(DPQMeta));
 	ret->dpq_by_a = NULL;
@@ -46,7 +54,7 @@ DualPriorityQueue* DPQConstruct(char* name, float priorityValA, float priorityVa
 }
 
 void DPQEnqueue(DPQMeta* dpq_meta, char* name, float priorityValA, float priorityValB) {
-	int goonflag = 0;
+	int go_on_flag = 0;
 	if(dpq_meta->dpq_by_a == NULL && dpq_meta->dpq_by_b == NULL) {
 		dpq_meta->dpq_by_a = DPQConstruct(name, priorityValA, priorityValB);
 		dpq_meta->dpq_by_b = DPQConstruct(name, priorityValA, priorityValB);
@@ -56,14 +64,14 @@ void DPQEnqueue(DPQMeta* dpq_meta, char* name, float priorityValA, float priorit
 	DualPriorityQueue* appendage_1 = DPQConstruct(name, priorityValA, priorityValB);
 
 	DualPriorityQueue* itr = dpq_meta->dpq_by_a;
-	if(itr->priorityValA > priorityValA) {
+	if(itr->priorityValA < priorityValA) {
 		appendage_1->next = itr;
 		dpq_meta->dpq_by_a = appendage_1;
-		goonflag = 1;
+		go_on_flag = 1;
 	}
-	if(!goonflag) {
+	if(!go_on_flag) {
 		while(itr->next != NULL) {
-			if(itr->next->priorityValA < priorityValA) itr = itr->next;
+			if(itr->next->priorityValA > priorityValA) itr = itr->next;
 			else break;
 		}
 		appendage_1->next = itr->next;
@@ -71,15 +79,15 @@ void DPQEnqueue(DPQMeta* dpq_meta, char* name, float priorityValA, float priorit
 	}
 
 	DualPriorityQueue* appendage_2 = DPQConstruct(name, priorityValA, priorityValB);
-	goonflag = 0;
+	go_on_flag = 0;
 	itr = dpq_meta->dpq_by_b;
-	if(itr->priorityValB > priorityValB) {
+	if(itr->priorityValB < priorityValB) {
 		appendage_2->next = itr;
 		dpq_meta->dpq_by_b = appendage_2;
 	}
-	if(!goonflag) {
+	if(!go_on_flag) {
 		while(itr->next != NULL) {
-			if(itr->next->priorityValB < priorityValB) itr = itr->next;
+			if(itr->next->priorityValB > priorityValB) itr = itr->next;
 			else break;
 		}
 		appendage_2->next = itr->next;
@@ -133,30 +141,47 @@ char* DPQDequeueB(DPQMeta* dpq_meta) {
 	return retstr;
 }
 
-void DPQClear(DualPriorityQueue* dpq) { //destructor
-	if(dpq == NULL) return;
-	DPQClear(dpq);
-	free(dpq->name);
-	free(dpq);
+void DPQClear(DPQMeta* meta) { //destructor
+	DualPriorityQueue* dpq_a = meta->dpq_by_a;
+	DualPriorityQueue* dpq_b = meta->dpq_by_b;
+	DualPriorityQueue* tmp_a = meta->dpq_by_a->next;
+	DualPriorityQueue* tmp_b = meta->dpq_by_b->next;
+	while(dpq_a != NULL && dpq_b != NULL) {
+		free(dpq_a->name);
+		free(dpq_b->name);
+		free(dpq_a);
+		free(dpq_b);
+		dpq_a = dpq_a->next;
+		dpq_b = dpq_b->next;
+		if(dpq_a->next == NULL) {
+			if(dpb_b == NULL || dpq_b->next != NULL) {
+				printf("queue mismatch");
+				return;
+			}
+			return;
+		}
+		tmp_a = dpq_a->next;
+		tmp_b = dpq_b->next;
+	}
 }
 
-int DPQCount(DualPriorityQueue* dpq) {
+int DPQCount(DPQMeta* meta) {
 	int count = 0;
-	while(dpq != NULL) ++count;
+	DualPriorityQueue* dpq = meta->dpq_by_a;
+	while(dpq != NULL) {
+		++count;
+		dpq = dpq->next;
+	} 	
 	return count;
 }
 
 int main(int argc, char** argv)
 {
-	DPQMeta* dpqm = DPQMetaConstruct();
-	DPQEnqueue(dpqm, "ho", 1, 4);
-	DPQEnqueue(dpqm, "hey", 2, 3);
-	DPQEnqueue(dpqm, "lets", 3, 2);
-	DPQEnqueue(dpqm, "go", 4, 1);
-	printf("%s ", DPQDequeueA(dpqm));
-	printf("%s ", DPQDequeueB(dpqm));
-	printf("%s ", DPQDequeueA(dpqm));
-	printf("%s\n", DPQDequeueB(dpqm));
+	DPQMeta meta;
+	meta.dpq_by_a = NULL;
+	meta.dpq_by_b = NULL;
 
+	DPQEnqueue(&meta, "reddit", 2, 1);
+	DPQClear(meta.dpq_by_a);
 	return 0;
 }
