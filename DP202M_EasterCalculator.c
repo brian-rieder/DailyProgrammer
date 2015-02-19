@@ -24,5 +24,5 @@ int main(int argc, char **argv) {
 	int e = (2*a + 4*b - d + 34) % 7;
 	int month = (d + e + 114) / 31;
 	int day = (d + e + 114) % 31 + 1;
-	printf("Easter Day in %d occurred on %d/%d/%d according to the Gregorian calendar.", year, month, day, year);
+	printf("Easter Day in %d occurred on %d/%d/%d according to the Julian calendar.", year, month, day, year);
 }
